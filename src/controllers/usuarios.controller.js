@@ -1,14 +1,31 @@
 const usuarioModel = require('../models/usuario.model');
 const UsuarioModel = require('../models/usuario.model');
 
+// query string params
+// /usuarios?page=1&limit=2
 const index = async(req, res) => {
     try {
-        const usuarios = await UsuarioModel.find({deleted: false});
+        const {page, limit} = req.query;
+        const skip = (page - 1) * limit;
+        const usuarios = await UsuarioModel.find({deleted: false}).skip(skip).limit(limit);
 
-        return res.status(200).json({
+        let response = {
             message: "se obtuvieron correctamente los usuarios",
-            usuarios
-        });
+            data: usuarios
+        }
+
+        if (page && limit) {
+            const totalUsuarios = await UsuarioModel.countDocuments({deleted: false});
+            const totalPages = Math.ceil(totalUsuarios / limit);
+
+            response = {
+                ...response,
+                total: totalUsuarios,
+                totalPages,
+            }
+        }
+
+        return res.status(200).json(response);
     } catch(error) {
         return res.status(500).json({
             message: "ocurrió un error al obtener los usuarios",
