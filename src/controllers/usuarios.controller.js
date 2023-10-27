@@ -65,7 +65,8 @@ const create = async (req, res) => {
         let usuario = new UsuarioModel({
             nombre: req.body.nombre,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body, saltosBycript)
+            password: bcrypt.hashSync(req.body.password, saltosBycript),
+            createdBy: req.usuario._id
         });
     
         await usuario.save();
