@@ -13,11 +13,11 @@ const usuarioSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    created_at: {
+    createdAt: {
         type: Date,
         default: new Date()
     },
-    updated_at: {
+    updatedAt: {
         type: Date,
         default: null
     },
@@ -26,7 +26,7 @@ const usuarioSchema = mongoose.Schema({
         required: false,
         default: false,
     },
-    deleted_at: {
+    deletedAt: {
         type: Date,
         default: null,
     },

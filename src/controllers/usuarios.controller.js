@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const saltosBycript = parseInt(process.env.SALTOS_BCRYPT);
 const usuarioModel = require('../models/usuario.model');
 const UsuarioModel = require('../models/usuario.model');
 
@@ -63,7 +65,7 @@ const create = async (req, res) => {
         let usuario = new UsuarioModel({
             nombre: req.body.nombre,
             email: req.body.email,
-            password: req.body.password
+            password: bcrypt.hashSync(req.body, saltosBycript)
         });
     
         await usuario.save();
