@@ -13,6 +13,10 @@ const usuarioSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    imagenPerfil: {
+        type: String,
+        required: false,
+    },
     createdAt: {
         type: Date,
         default: new Date()
